@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Floraya — Ukrainian Flowers Delivered</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF7F2;
+    --warm: #F2EBE0;
+    --blush: #E8C9B0;
+    --rose: #C4756A;
+    --deep: #6B3A35;
+    --forest: #3D5A45;
+    --text: #2A1F1C;
+    --muted: #8A7B74;
+    --white: #FFFFFF;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(250,247,242,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(196,117,106,0.12);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 28px; font-weight: 300; letter-spacing: 0.08em;
+    color: var(--deep); text-decoration: none;
+  }
+  .nav-logo span { color: var(--rose); font-style: italic; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 400; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--rose); }
+  .nav-cta {
+    background: var(--rose); color: white;
+    padding: 10px 24px; border-radius: 2px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--deep); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 64px 80px 80px;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--rose);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 32px; height: 1px; background: var(--rose);
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(52px, 6vw, 80px);
+    font-weight: 300; line-height: 1.05;
+    color: var(--deep); margin-bottom: 28px;
+  }
+  .hero-title em { color: var(--rose); font-style: italic; }
+  .hero-desc {
+    font-size: 16px; line-height: 1.7; color: var(--muted);
+    max-width: 420px; margin-bottom: 40px;
+  }
+  .hero-actions { display: flex; gap: 16px; align-items: center; }
+  .btn-primary {
+    background: var(--rose); color: white;
+    padding: 16px 36px; border-radius: 2px;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--deep); transform: translateY(-1px); }
+  .btn-secondary {
+    font-size: 13px; font-weight: 400; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.04em;
+    display: flex; align-items: center; gap: 8px;
+    transition: color 0.2s;
+  }
+  .btn-secondary:hover { color: var(--rose); }
+  .btn-secondary svg { transition: transform 0.2s; }
+  .btn-secondary:hover svg { transform: translateX(4px); }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 56px;
+    padding-top: 40px; border-top: 1px solid rgba(196,117,106,0.2);
+  }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 36px; font-weight: 300; color: var(--deep);
+  }
+  .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
+
+  .hero-right {
+    background: var(--warm);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-image-container {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .flower-visual {
+    width: 380px; height: 500px;
+    background: linear-gradient(145deg, #E8D5C4 0%, #D4A898 40%, #C4756A 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 120px;
+    box-shadow: 0 40px 80px rgba(107,58,53,0.2);
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-16px); }
+  }
+  .hero-badge {
+    position: absolute; bottom: 60px; right: 60px;
+    background: white; border-radius: 50%;
+    width: 100px; height: 100px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  }
+  .badge-text { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .badge-num { font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--rose); }
+
+  /* HOW IT WORKS */
+  .how { padding: 100px 80px; background: white; }
+  .section-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--rose);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::before { content: ''; width: 32px; height: 1px; background: var(--rose); }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(38px, 4vw, 54px);
+    font-weight: 300; color: var(--deep); margin-bottom: 60px;
+    max-width: 500px; line-height: 1.15;
+  }
+  .section-title em { color: var(--rose); font-style: italic; }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .step {
+    padding: 40px 36px;
+    border-right: 1px solid rgba(196,117,106,0.15);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .step:last-child { border-right: none; }
+  .step:hover { background: var(--cream); }
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 64px; font-weight: 300;
+    color: rgba(196,117,106,0.2);
+    line-height: 1; margin-bottom: 16px;
+  }
+  .step-icon { font-size: 28px; margin-bottom: 16px; }
+  .step-title { font-size: 16px; font-weight: 500; color: var(--deep); margin-bottom: 10px; }
+  .step-desc { font-size: 14px; line-height: 1.6; color: var(--muted); }
+
+  /* SHOP */
+  .shop { padding: 100px 80px; background: var(--cream); }
+  .shop-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; }
+  .filter-tabs { display: flex; gap: 4px; }
+  .tab {
+    padding: 8px 20px; border-radius: 2px;
+    font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+    cursor: pointer; border: 1px solid transparent;
+    transition: all 0.2s; background: none; font-family: var(--font-body);
+    color: var(--muted);
+  }
+  .tab.active, .tab:hover {
+    background: var(--rose); color: white; border-color: var(--rose);
+  }
+  .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .product-card {
+    background: white; border-radius: 4px;
+    overflow: hidden; cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+  }
+  .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(107,58,53,0.12); }
+  .product-img {
+    height: 280px;
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px;
+  }
+  .product-img-1 { background: linear-gradient(135deg, #F5E6D8, #E8C9B0); }
+  .product-img-2 { background: linear-gradient(135deg, #E8D5E8, #C9A8D4); }
+  .product-img-3 { background: linear-gradient(135deg, #D8E8D8, #A8C9A8); }
+  .product-img-4 { background: linear-gradient(135deg, #F5EAD8, #E8C98A); }
+  .product-img-5 { background: linear-gradient(135deg, #F5D8D8, #E89898); }
+  .product-img-6 { background: linear-gradient(135deg, #D8EAF5, #98B8E8); }
+  .product-badge-new {
+    position: absolute; top: 16px; left: 16px;
+    background: var(--forest); color: white;
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 2px;
+  }
+  .product-badge-popular {
+    position: absolute; top: 16px; left: 16px;
+    background: var(--rose); color: white;
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 2px;
+  }
+  .product-body { padding: 20px 24px 24px; }
+  .product-category { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .product-name { font-family: var(--font-display); font-size: 22px; font-weight: 400; color: var(--deep); margin-bottom: 6px; }
+  .product-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 16px; }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price { font-family: var(--font-display); font-size: 26px; font-weight: 300; color: var(--rose); }
+  .product-price span { font-size: 14px; color: var(--muted); }
+  .add-btn {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--rose); color: white; border: none;
+    font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .add-btn:hover { background: var(--deep); transform: scale(1.1); }
+
+  /* PROMISE SECTION */
+  .promise { padding: 100px 80px; background: var(--deep); color: white; }
+  .promise-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .promise-title {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 5vw, 64px);
+    font-weight: 300; line-height: 1.1; margin-bottom: 28px;
+  }
+  .promise-title em { color: var(--blush); font-style: italic; }
+  .promise-desc { font-size: 16px; line-height: 1.7; color: rgba(255,255,255,0.65); margin-bottom: 36px; }
+  .promise-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .promise-list li {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 15px; color: rgba(255,255,255,0.8);
+  }
+  .promise-list li::before {
+    content: '✦'; color: var(--blush); font-size: 12px; flex-shrink: 0;
+  }
+  .promise-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .promise-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px; padding: 28px 24px;
+    transition: background 0.2s;
+  }
+  .promise-card:hover { background: rgba(255,255,255,0.1); }
+  .promise-card-icon { font-size: 28px; margin-bottom: 12px; }
+  .promise-card-title { font-size: 15px; font-weight: 500; color: var(--blush); margin-bottom: 8px; }
+  .promise-card-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+  /* TESTIMONIALS */
+  .testimonials { padding: 100px 80px; background: var(--warm); }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
+  .testimonial {
+    background: white; padding: 32px;
+    border-radius: 4px; position: relative;
+  }
+  .testimonial::before {
+    content: '"';
+    font-family: var(--font-display); font-size: 80px;
+    color: rgba(196,117,106,0.15); position: absolute;
+    top: 8px; left: 24px; line-height: 1;
+  }
+  .testimonial-text { font-size: 15px; line-height: 1.7; color: var(--text); margin-bottom: 20px; padding-top: 16px; }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; }
+  .author-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .author-name { font-size: 14px; font-weight: 500; color: var(--deep); }
+  .author-loc { font-size: 12px; color: var(--muted); }
+  .stars { color: var(--rose); font-size: 12px; letter-spacing: 2px; margin-bottom: 12px; }
+
+  /* ORDER FORM */
+  .order { padding: 100px 80px; background: white; }
+  .order-inner { max-width: 700px; margin: 0 auto; }
+  .order-inner .section-title { max-width: 100%; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .form-group input, .form-group textarea, .form-group select {
+    border: 1px solid rgba(196,117,106,0.25);
+    border-radius: 2px; padding: 14px 16px;
+    font-family: var(--font-body); font-size: 15px; color: var(--text);
+    background: var(--cream); outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--rose);
+  }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    width: 100%; margin-top: 24px;
+    background: var(--rose); color: white; border: none;
+    padding: 18px; border-radius: 2px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .form-submit:hover { background: var(--deep); }
+
+  /* FOOTER */
+  footer {
+    background: var(--text); color: rgba(255,255,255,0.6);
+    padding: 60px 80px 40px;
+  }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand { font-family: var(--font-display); font-size: 32px; font-weight: 300; color: white; margin-bottom: 12px; }
+  .footer-brand span { color: var(--blush); font-style: italic; }
+  .footer-tagline { font-size: 14px; line-height: 1.6; }
+  .footer-heading { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: white; margin-bottom: 16px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--blush); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; font-size: 12px; }
+
+  /* ANIMATIONS */
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 32px; right: 32px; z-index: 999;
+    background: var(--forest); color: white;
+    padding: 16px 24px; border-radius: 4px;
+    font-size: 14px; display: flex; align-items: center; gap: 10px;
+    transform: translateY(80px); opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { height: 320px; }
+    .hero-left { padding: 60px 24px; }
+    .how { padding: 60px 24px; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .step { border-right: none; border-bottom: 1px solid rgba(196,117,106,0.15); }
+    .shop { padding: 60px 24px; }
+    .products { grid-template-columns: 1fr; }
+    .promise { padding: 60px 24px; }
+    .promise-grid { grid-template-columns: 1fr; gap: 40px; }
+    .testimonials { padding: 60px 24px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .order { padding: 60px 24px; }
+    .form-grid { grid-template-columns: 1fr; }
+    footer { padding: 40px 24px; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Flor<span>aya</span></a>
+  <ul class="nav-links">
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#order">Order</a></li>
+  </ul>
+  <a href="#order" class="nav-cta">Send Flowers</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Ukraine's finest flowers</div>
+    <h1 class="hero-title">
+      Send love<br>to her in<br><em>Ukraine</em>
+    </h1>
+    <p class="hero-desc">
+      Fresh bouquets delivered anywhere in Ukraine. Order from anywhere in the world — we handle everything locally.
+    </p>
+    <div class="hero-actions">
+      <a href="#shop" class="btn-primary">Browse Bouquets</a>
+      <a href="#how" class="btn-secondary">
+        How it works
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">2 400+</div>
+        <div class="stat-label">Bouquets delivered</div>
+      </div>
+      <div>
+        <div class="stat-num">38</div>
+        <div class="stat-label">Cities in Ukraine</div>
+      </div>
+      <div>
+        <div class="stat-num">4.9★</div>
+        <div class="stat-label">Average rating</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-image-container">
+      <div class="flower-visual">🌸</div>
+      <div class="hero-badge">
+        <div class="badge-text">From</div>
+        <div class="badge-num">$29</div>
+        <div class="badge-text">USD</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="section-label">Simple process</div>
+  <h2 class="section-title">How does<br><em>Floraya</em> work?</h2>
+  <div class="steps">
+    <div class="step fade-up">
+      <div class="step-num">01</div>
+      <div class="step-icon">💐</div>
+      <div class="step-title">Choose a bouquet</div>
+      <div class="step-desc">Browse our curated selection of fresh Ukrainian flowers and seasonal arrangements.</div>
+    </div>
+    <div class="step fade-up" style="transition-delay:0.1s">
+      <div class="step-num">02</div>
+      <div class="step-icon">📝</div>
+      <div class="step-title">Place your order</div>
+      <div class="step-desc">Enter the recipient's name, city, address, and your personal message card.</div>
+    </div>
+    <div class="step fade-up" style="transition-delay:0.2s">
+      <div class="step-num">03</div>
+      <div class="step-icon">💳</div>
+      <div class="step-title">Pay securely</div>
+      <div class="step-desc">Pay online via card or PayPal. 100% secure. We confirm your order within 1 hour.</div>
+    </div>
+    <div class="step fade-up" style="transition-delay:0.3s">
+      <div class="step-num">04</div>
+      <div class="step-icon">🚚</div>
+      <div class="step-title">We deliver</div>
+      <div class="step-desc">We work with local flower shops across Ukraine to deliver same-day or next-day.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section class="shop" id="shop">
+  <div class="shop-header">
+    <div>
+      <div class="section-label">Our collection</div>
+      <h2 class="section-title" style="margin-bottom:0">Fresh<br><em>bouquets</em></h2>
+    </div>
+    <div class="filter-tabs">
+      <button class="tab active" onclick="filterProducts('all', this)">All</button>
+      <button class="tab" onclick="filterProducts('roses', this)">Roses</button>
+      <button class="tab" onclick="filterProducts('mixed', this)">Mixed</button>
+      <button class="tab" onclick="filterProducts('premium', this)">Premium</button>
+    </div>
+  </div>
+  <div class="products" id="products-grid">
+    <div class="product-card fade-up" data-cat="roses">
+      <div class="product-img product-img-1">
+        <span class="product-badge-popular">Popular</span>
+        🌹
+      </div>
+      <div class="product-body">
+        <div class="product-category">Roses</div>
+        <div class="product-name">Classic Red Roses</div>
+        <div class="product-desc">11 fresh red roses, baby's breath, wrapped in kraft paper with ribbon.</div>
+        <div class="product-footer">
+          <div class="product-price">$39 <span>USD</span></div>
+          <button class="add-btn" onclick="addToCart('Classic Red Roses', 39)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card fade-up" style="transition-delay:0.1s" data-cat="mixed">
+      <div class="product-img product-img-2">
+        <span class="product-badge-new">New</span>
+        💜
+      </div>
+      <div class="product-body">
+        <div class="product-category">Mixed</div>
+        <div class="product-name">Lavender Dream</div>
+        <div class="product-desc">Purple tulips, lilac, and eustoma in a romantic pastel arrangement.</div>
+        <div class="product-footer">
+          <div class="product-price">$45 <span>USD</span></div>
+          <button class="add-btn" onclick="addToCart('Lavender Dream', 45)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card fade-up" style="transition-delay:0.2s" data-cat="mixed">
+      <div class="product-img product-img-3">
+        🌿
+      </div>
+      <div class="product-body">
+        <div class="product-category">Mixed</div>
+        <div class="product-name">Garden Whisper</div>
+        <div class="product-desc">Seasonal wildflowers and greenery, freshly picked, wrapped in linen.</div>
+        <div class="product-footer">
+          <div class="product-price">$34 <span>USD</span></div>
+          <button class="add-btn" onclick="addToCart('Garden Whisper', 34)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card fade-up" data-cat="premium">
+      <div class="product-img product-img-4">
+        ✨
+      </div>
+      <div class="product-body">
+        <div class="product-category">Premium</div>
+        <div class="product-name">Golden Sunrise</div>
+        <div class="product-desc">Sunflowers, yellow roses and mimosa — a burst of Ukrainian summer joy.</div>
+        <div class="product-footer">
+          <div class="product-price">$52 <span>USD</span></div>
+          <button class="add-btn" onclick="addToCart('Golden Sunrise', 52)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card fade-up" style="transition-delay:0.1s" data-cat="roses">
+      <div class="product-img product-img-5">
+        🌸
+      </div>
+      <div class="product-body">
+        <div class="product-category">Roses</div>
+        <div class="product-name">Pink Tenderness</div>
+        <div class="product-desc">21 pink roses, eucalyptus sprigs, in a white round box with a lid.</div>
+        <div class="product-footer">
+          <div class="product-price">$59 <span>USD</span></div>
+          <button class="add-btn" onclick="addToCart('Pink Tenderness', 59)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card fade-up" style="transition-delay:0.2s" data-cat="premium">
+      <div class="product-img product-img-6">
+        💙
+      </div>
+      <div class="product-body">
+        <div class="product-category">Premium</div>
+        <div class="product-name">Blue Horizon</div>
+        <div class="product-desc">Blue hydrangea, white orchid, delphinium — a luxury statement bouquet.</div>
+        <div class="product-footer">
+          <div class="product-price">$79 <span>USD</span></div>
+          <button class="add-btn" onclick="addToCart('Blue Horizon', 79)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMISE -->
+<section class="promise">
+  <div class="promise-grid">
+    <div>
+      <div class="section-label" style="color: var(--blush)">Our promise</div>
+      <h2 class="promise-title">Fresh flowers,<br><em>real care</em></h2>
+      <p class="promise-desc">Every bouquet is prepared by a local florist in Ukraine on the day of delivery. We don't store flowers — we source them fresh, every single time.</p>
+      <ul class="promise-list">
+        <li>Same-day delivery available in major cities</li>
+        <li>Photo confirmation sent to you after delivery</li>
+        <li>100% money back if delivery fails</li>
+        <li>Available 7 days a week, including holidays</li>
+        <li>Personal message card included with every order</li>
+      </ul>
+    </div>
+    <div class="promise-cards">
+      <div class="promise-card">
+        <div class="promise-card-icon">🌍</div>
+        <div class="promise-card-title">Worldwide orders</div>
+        <div class="promise-card-desc">Order from USA, Europe, Canada — anywhere in the world.</div>
+      </div>
+      <div class="promise-card">
+        <div class="promise-card-icon">⚡</div>
+        <div class="promise-card-title">Fast delivery</div>
+        <div class="promise-card-desc">Same-day in Kyiv, Lviv, Odesa, Kharkiv and 35+ cities.</div>
+      </div>
+      <div class="promise-card">
+        <div class="promise-card-icon">📸</div>
+        <div class="promise-card-title">Photo proof</div>
+        <div class="promise-card-desc">We send you a photo when flowers are delivered.</div>
+      </div>
+      <div class="promise-card">
+        <div class="promise-card-icon">💬</div>
+        <div class="promise-card-title">Live support</div>
+        <div class="promise-card-desc">Real humans available via WhatsApp and email.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-label">Happy customers</div>
+  <h2 class="section-title">What they<br><em>say about us</em></h2>
+  <div class="testimonials-grid">
+    <div class="testimonial fade-up">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Ordered from Toronto for my girlfriend in Kyiv. The flowers arrived within 3 hours, and she cried happy tears. The photo they sent me was beautiful. Will order again!</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">🇨🇦</div>
+        <div>
+          <div class="author-name">Michael T.</div>
+          <div class="author-loc">Toronto, Canada</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial fade-up" style="transition-delay:0.1s">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Surprise bouquet for my mother in Lviv on her birthday. Floraya handled everything perfectly. Communication was smooth and I got a delivery photo in 2 hours.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">🇩🇪</div>
+        <div>
+          <div class="author-name">Stefan K.</div>
+          <div class="author-loc">Berlin, Germany</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial fade-up" style="transition-delay:0.2s">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Used Floraya three times now. Always fresh, always on time. My wife in Odesa is always amazed. Best flower delivery service for Ukraine, hands down.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">🇺🇸</div>
+        <div>
+          <div class="author-name">James R.</div>
+          <div class="author-loc">New York, USA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER FORM -->
+<section class="order" id="order">
+  <div class="order-inner">
+    <div class="section-label">Place your order</div>
+    <h2 class="section-title">Send flowers<br><em>today</em></h2>
+    <form onsubmit="submitOrder(event)">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Your name</label>
+          <input type="text" placeholder="John Smith" required>
+        </div>
+        <div class="form-group">
+          <label>Your email</label>
+          <input type="email" placeholder="john@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Recipient name</label>
+          <input type="text" placeholder="Olena Kovalenko" required>
+        </div>
+        <div class="form-group">
+          <label>Recipient phone (Ukraine)</label>
+          <input type="tel" placeholder="+380 XX XXX XXXX">
+        </div>
+        <div class="form-group">
+          <label>City in Ukraine</label>
+          <select>
+            <option>Kyiv</option>
+            <option>Lviv</option>
+            <option>Odesa</option>
+            <option>Kharkiv</option>
+            <option>Dnipro</option>
+            <option>Zaporizhzhia</option>
+            <option>Other (specify below)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Bouquet</label>
+          <select id="bouquet-select">
+            <option>Classic Red Roses — $39</option>
+            <option>Lavender Dream — $45</option>
+            <option>Garden Whisper — $34</option>
+            <option>Golden Sunrise — $52</option>
+            <option>Pink Tenderness — $59</option>
+            <option>Blue Horizon — $79</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Delivery address</label>
+          <input type="text" placeholder="Street, building number, apartment" required>
+        </div>
+        <div class="form-group full">
+          <label>Message card (optional)</label>
+          <textarea placeholder="Write a personal message to be included with the bouquet..."></textarea>
+        </div>
+      </div>
+      <button type="submit" class="form-submit">Send My Order →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">Flor<span>aya</span></div>
+      <p class="footer-tagline">Bringing Ukrainian flowers<br>to the world, one bouquet at a time.</p>
+    </div>
+    <div>
+      <div class="footer-heading">Shop</div>
+      <ul class="footer-links">
+        <li><a href="#shop">All Bouquets</a></li>
+        <li><a href="#shop">Roses</a></li>
+        <li><a href="#shop">Mixed</a></li>
+        <li><a href="#shop">Premium</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Info</div>
+      <ul class="footer-links">
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#order">Order now</a></li>
+        <li><a href="#">Delivery areas</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Contact</div>
+      <ul class="footer-links">
+        <li><a href="#">hello@floraya.com</a></li>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Floraya. All rights reserved.</span>
+    <span>Made with 💙💛 for Ukraine</span>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span>🌸</span>
+  <span id="toast-msg">Added to your order!</span>
+</div>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Filter products
+  function filterProducts(cat, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'block' : 'none';
+    });
+  }
+
+  // Add to cart / select bouquet
+  function addToCart(name, price) {
+    const sel = document.getElementById('bouquet-select');
+    for (let opt of sel.options) {
+      if (opt.text.startsWith(name)) { sel.value = opt.value; break; }
+    }
+    showToast(`"${name}" selected — scroll down to order!`);
+    document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Toast
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-msg').textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+
+  // Order form
+  function submitOrder(e) {
+    e.preventDefault();
+    showToast('Order received! We\'ll email you within 1 hour ✓');
+    setTimeout(() => e.target.reset(), 500);
+  }
+</script>
+</body>
+</html>
